@@ -9,7 +9,7 @@ This responsitory contains the code of paper "Personalized Outfit Recommendation
 1. clone this responsitory with submodules
 
     ```bash
-    git clone --recurse-submodules clone https://github.com/lzcn/LPAE-Net.git
+    git clone --recurse-submodules https://github.com/lzcn/LPAE-Net.git
     ```
 
 2. install submodules
@@ -45,7 +45,7 @@ This responsitory contains the code of paper "Personalized Outfit Recommendation
 
         ```bash
         # example
-        ./run_lpae_net.py evaluate --cfg configs/polyvore_630_lpae_u_resnet34_nn.yaml --log-dir summaries/polyvore_630_lpae_u_resnet34_nn --load-trained /path/to/pre-trained-model --gpus 0 
+        ./run_lpae_net.py evaluate --cfg configs/polyvore_630_lpae_u_resnet34_nn.yaml --log-dir summaries/polyvore_630_lpae_u_resnet34_nn --load-trained /path/to/pre-trained-model --gpus 0
         ```
 
 ## Contact
