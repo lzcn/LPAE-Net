@@ -1,0 +1,48 @@
+data_param:
+  factory: OutfitLoaderParam
+  data_root: "./outfit-datasets/polyvore-u/processed/original/tuples_630"
+  readers:
+    [
+      {
+        reader: "TensorLMDB",
+        path: "./outfit-datasets/polyvore-u/processed/features/resnet34",
+      },
+    ]
+  dataset:
+    data_mode: "PointwiseOutfit"
+    pos_mode: "Fix"
+    neg_mode: "Fix"
+  batch_size: 256
+  num_workers: 4
+  num_users: 630
+  num_types: 3
+  max_items: 3
+  shuffle: false
+
+train_data_param:
+  phase: train
+  dataset:
+    data_mode: "PairwiseOutfit"
+    pos_mode: "Fix"
+    neg_mode: "RandomMix"
+    neg_param: { ratio: 1, type_aware: true }
+  shuffle: true
+
+valid_data_param:
+  phase: valid
+
+test_data_param:
+  dataset:
+    data_mode: "FITB"
+    pos_mode: "Fix"
+    neg_mode: "FITB"
+    neg_param: { ratio: 3, type_aware: true }
+  phase: test
+
+net_param: !include "lpae_u.yaml"
+
+optim_param: !include "sgd_optimizer.yaml"
+
+display_interval: 50
+summary_interval: 200
+epochs: 200

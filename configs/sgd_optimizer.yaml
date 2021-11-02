@@ -1,0 +1,11 @@
+name: SGD
+lr: 0.1
+weight_decay: 1.0e-6
+param:
+  momentum: 0.9
+lr_scheduler:
+  name: ReduceLROnPlateau
+  param:
+    cooldown: 10
+    factor: 0.5
+    patience: 10

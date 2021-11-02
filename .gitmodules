@@ -1,0 +1,6 @@
+[submodule "outfit-datasets"]
+	path = outfit-datasets
+	url = https://github.com/lzcn/outfit-datasets.git
+[submodule "torchutils"]
+	path = torchutils
+	url = https://github.com/lzcn/torchutils.git
