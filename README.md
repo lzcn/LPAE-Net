@@ -53,6 +53,23 @@ This responsitory contains the code of paper "Personalized Outfit Recommendation
         --name evalute-auc
      ```
 
+   - evaluate FITB
+
+     uncomment the following line to evaluate the FITB using corresponding dataset
+
+     ```yaml
+     dataset: !include "data-fitb.yaml"
+     ```
+
+     ```bash
+     # example
+     ./run_lpae_net.py evaluate \
+        --cfg configs/polyvore_630_lpae_u_resnet34_nn.yaml \
+        --log-dir summaries/polyvore_630_lpae_u_resnet34_nn \
+        --load-trained summaries/polyvore_630_lpae_u_resnet34_nn/checkpoints/best_model.pt \
+        --gpus 0 \
+        --name evalute-fitb
+     ```
 
 ## Contact
 
