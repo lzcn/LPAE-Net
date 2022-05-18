@@ -2,17 +2,17 @@
 
 ## Description
 
-This responsitory contains the code of paper "Personalized Outfit Recommendation with Learnable Anchors - CVPR 2021"
+This responsitory contains the code of paper _"Personalized Outfit Recommendation with Learnable Anchors_ - CVPR 2021"
 
-## How to
+## Train the model
 
-1. clone this responsitory with submodules
+1. Clone this responsitory with submodules
 
    ```bash
    git clone --recurse-submodules https://github.com/lzcn/LPAE-Net.git
    ```
 
-2. install submodules
+2. Install submodules
 
    - `torchutils` is my personal responsitory that contains utilities for PyTorch.
 
@@ -28,23 +28,23 @@ This responsitory contains the code of paper "Personalized Outfit Recommendation
      python setup.py install
      ```
 
-   > This code may looks redundant since I move some implementation to other responsitories. You can simply use and modify the implementation of LPAE-Net to fit your requirement in `models/lpae_net.py` if you like.
-
-3. In each folder of `outfit-datasets`, use the scripts to prepare the dataset. I will improve the `outfit-datasets` so that you can test the model on different datasets that are not used in our paper.
+3. In each folder of `outfit-datasets`, use the scripts to prepare the dataset. I will improve the `outfit-datasets` so that you can test the model on different datasets that are not used in the original paper.
 
 4. Use the `run_lpae_net.py` to train or test.
 
-   - train the LPAE-Net
+   - Train LPAE-Net
 
      ```bash
-     # example
-     ./run_lpae_net.py train --cfg configs/polyvore_630_lpae_u_resnet34_nn.yaml --log-dir summaries/polyvore_630_lpae_u_resnet34_nn --gpus 0
+     ./run_lpae_net.py train \
+        --cfg configs/polyvore_630_lpae_u_resnet34_nn.yaml \
+        --log-dir summaries/polyvore_630_lpae_u_resnet34_nn
+        --gpus 0 \
+        --name train
      ```
 
-   - evaluate AUC
+   - Evaluate AUC
 
      ```bash
-     # example
      ./run_lpae_net.py evaluate \
         --cfg configs/polyvore_630_lpae_u_resnet34_nn.yaml \
         --log-dir summaries/polyvore_630_lpae_u_resnet34_nn \
@@ -53,17 +53,16 @@ This responsitory contains the code of paper "Personalized Outfit Recommendation
         --name evalute-auc
      ```
 
-   - evaluate FITB
+   - Evaluate FITB
 
-     uncomment the following line to evaluate the FITB using corresponding dataset
+     uncomment the following line in the configuration file to evaluate the FITB using corresponding dataset
 
      ```yaml
      dataset: !include "data-fitb.yaml"
      ```
 
      ```bash
-     # example
-     ./run_lpae_net.py evaluate \
+     ./run_lpae_net.py fitb \
         --cfg configs/polyvore_630_lpae_u_resnet34_nn.yaml \
         --log-dir summaries/polyvore_630_lpae_u_resnet34_nn \
         --load-trained summaries/polyvore_630_lpae_u_resnet34_nn/checkpoints/best_model.pt \
@@ -71,6 +70,20 @@ This responsitory contains the code of paper "Personalized Outfit Recommendation
         --name evalute-fitb
      ```
 
+## Logs
+
+- LPAE-_u_ (_ResNet-34-nn_) Polyvore-_630_
+
+  - [config.yaml](configs/polyvore_630_lpae_u_resnet34_nn.yaml)
+  - [train.log](summaries/polyvore_630_lpae_u_resnet34_nn/train.log)
+
+- LPAE-_u_ (_ResNet-34-nn_) Polyvore-_519_
+
+  - [config.yaml](configs/polyvore_519_lpae_u_resnet34_nn.yaml)
+  - [train.log](summaries/polyvore_519_lpae_u_resnet34_nn/train.log)
+
+> _ResNet-34-nn_ reprensents the pretrained image features extracted from [ResNet-34](https://arxiv.org/abs/1512.03385), i.e. the backbone is not fine-tuned.
+
 ## Contact
 
-Email: zhilu@std.uestc.edu.cn
+email: zhilu@std.uestc.edu.cn
