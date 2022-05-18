@@ -113,7 +113,6 @@ def get_train_engine(config: RunParam, net: nn.Module, tester: Engine):
         epoch = trainer.state.epoch
         metrics = trainer.state.metrics
         tb_writer.add_scalar("Loss/Test", metrics["loss"], epoch)
-        tb_writer.add_scalar("Accuracy/Test", metrics["accuracy"], epoch)
         rank_metrics = {"auc": metrics["auc"], "ndcg": metrics["ndcg"]}
         tb_writer.add_scalars("Rank/Test", rank_metrics, epoch)
         LOGGER.info("Epoch %d/%d - Test Results:\n%s", epoch, trainer.state.max_epochs, pformat(metrics))
@@ -168,7 +167,7 @@ def train(config: RunParam):
     valid_data = outfit_datasets.OutfitLoader(config.valid_data_param)
     tester = get_eval_engine(net, valid_data)
     trainer = get_train_engine(config, net, tester)
-    trainer.run(trainer.data, max_epochs=config.epochs)
+    trainer.run(trainer.state.dataloader, max_epochs=config.epochs)
     config.load_trained = trainer.checkpoint.last_checkpoint
     evaluate(config)
 
