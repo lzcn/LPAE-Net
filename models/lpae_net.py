@@ -3,8 +3,9 @@ import math
 import attr
 import torch
 import torch.nn.functional as F
-import torchutils
 from torch import nn
+
+import torchutils
 from torchutils.param import Param
 
 
@@ -160,7 +161,7 @@ def stack_sab(dim, num_heads, num_sab, num_points=0):
 
 def embed_layer(in_features, out_features, dropout=0.2) -> nn.Module:
     x = nn.Sequential(
-        nn.Linear(in_features, out_features), nn.LayerNorm(out_features), nn.ReLU(inplace=True), nn.Dropout(dropout),
+        nn.Linear(in_features, out_features), nn.LayerNorm(out_features), nn.ReLU(inplace=True), nn.Dropout(dropout)
     )
     x.apply(weights_init)
     return x
@@ -242,7 +243,7 @@ class UserMemory(nn.Module):
         if self.logdet:
             reg = (g.diagonal(dim1=1, dim2=2).sum() - torch.logdet(g).sum()) / n
         # orthogonality regularization as an alternative
-        # when illegal GPU memory access happend
+        # when illegal GPU memory access happens
         # TODO: to find that why logdet will rarely raise RuntimeError
         else:
             reg = ((g * (torch.ones_like(g) - torch.eye(s).cuda())) ** 2).sum() / n

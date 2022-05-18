@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 import argparse
-import json
 import logging
 import os
 from pprint import pformat
@@ -8,18 +7,17 @@ from pprint import pformat
 import numpy as np
 import outfit_datasets
 import torch
-import torchutils
 import tqdm
-from attr import evolve
 from ignite.contrib.handlers.tensorboard_logger import OptimizerParamsHandler, TensorboardLogger
 from ignite.contrib.handlers.tqdm_logger import ProgressBar
 from ignite.engine import Engine, Events
 from ignite.handlers import ModelCheckpoint, global_step_from_engine
 from outfit_datasets import RunParam, metrics
 from torch import nn
-from torch.nn.parallel import data_parallel
 from torch.utils.data.dataloader import DataLoader
 from torch.utils.tensorboard import SummaryWriter
+
+import torchutils
 from models import LPAENet
 
 LOGGER = logging.getLogger("main")
@@ -40,7 +38,7 @@ def get_net(param: RunParam, training=False, cuda=False):
 
 
 def get_eval_engine(net: nn.Module, dataloader: DataLoader) -> Engine:
-    def test_batch(enginer: Engine, batch):
+    def test_batch(engine: Engine, batch):
         data = torchutils.to_device(batch["data"])
         uidx = torchutils.to_device(batch["uidx"])
         cate = torchutils.to_device(batch["cate"])
@@ -73,7 +71,7 @@ def get_train_engine(config: RunParam, net: nn.Module, tester: Engine):
     dataloader = outfit_datasets.OutfitLoader(config.train_data_param)
     meter = torchutils.meter.GroupMeter(loss=50, accuracy=50)
 
-    def train_batch(enginer: Engine, batch):
+    def train_batch(engine: Engine, batch):
         data = torchutils.to_device(batch["data"])
         uidx = torchutils.to_device(batch["uidx"])
         cate = torchutils.to_device(batch["cate"])
