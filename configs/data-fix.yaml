@@ -1,0 +1,3 @@
+data_mode: "PointwiseOutfit"
+pos_mode: "Fix"
+neg_mode: "Fix"

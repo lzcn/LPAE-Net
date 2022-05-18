@@ -8,10 +8,7 @@ data_param:
         path: "./outfit-datasets/polyvore-u/processed/features/resnet34",
       },
     ]
-  dataset:
-    data_mode: "PointwiseOutfit"
-    pos_mode: "Fix"
-    neg_mode: "Fix"
+  dataset: !include "data-random-mix.yaml"
   batch_size: 256
   num_workers: 4
   num_users: 630
@@ -32,11 +29,7 @@ valid_data_param:
   phase: valid
 
 test_data_param:
-  dataset:
-    data_mode: "FITB"
-    pos_mode: "Fix"
-    neg_mode: "FITB"
-    neg_param: { ratio: 3, type_aware: true }
+  # dataset: !include "data-fitb.yaml"
   phase: test
 
 net_param: !include "lpae_g.yaml"

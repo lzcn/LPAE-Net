@@ -1,0 +1,4 @@
+data_mode: "FITB"
+pos_mode: "Fix"
+neg_mode: "FITB"
+neg_param: { ratio: 3, type_aware: true }
